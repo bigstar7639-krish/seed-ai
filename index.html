@@ -1,127 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SEED AI 🌱 - Your Smart AI</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEED AI V2 🌱 - All AI Free</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{background:#0a0e1a;color:#fff;height:100vh;display:flex;flex-direction:column}
-header{background:#111827;padding:15px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1f2937}
-.logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800}
-.logo span{color:#22c55e}
-.status{font-size:12px;background:#22c55e22;color:#22c55e;padding:6px 12px;border-radius:20px;border:1px solid #22c55e}
-.chat-container{flex:1;overflow-y:auto;padding:20px;max-width:800px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:15px}
-.msg{max-width:80%;padding:12px 16px;border-radius:18px;font-size:15px;line-height:1.5;animation:pop .3s ease}
-@keyframes pop{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+body{background:#080c14;color:#fff;min-height:100vh;display:flex;flex-direction:column}
+header{background:#0f172a;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1e293b;flex-wrap:wrap;gap:10px}
+.logo{font-size:20px;font-weight:900} .logo span{color:#22c55e}
+.models{display:flex;gap:6px;flex-wrap:wrap}
+.model-btn{font-size:11px;padding:6px 12px;border-radius:20px;border:1px solid #334155;background:#1e293b;color:#94a3b8;cursor:pointer;transition:.2s}
+.model-btn.active{background:#22c55e;color:#000;border-color:#22c55e;font-weight:700}
+.model-btn:hover{border-color:#22c55e}
+.chat{flex:1;overflow-y:auto;padding:18px;max-width:900px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.msg{max-width:85%;padding:12px 16px;border-radius:18px;font-size:14px;line-height:1.6;white-space:pre-wrap;word-wrap:break-word}
 .user{align-self:flex-end;background:#2563eb;border-bottom-right-radius:4px}
 .ai{align-self:flex-start;background:#1e293b;border:1px solid #334155;border-bottom-left-radius:4px}
-.ai b{color:#4ade80}
-.thinking{font-size:13px;color:#94a3b8;font-style:italic}
-.input-area{padding:15px;background:#111827;border-top:1px solid #1f2937;display:flex;gap:10px;max-width:800px;width:100%;margin:0 auto}
-.input-area input{flex:1;background:#1e293b;border:1px solid #334155;color:#fff;padding:14px 18px;border-radius:25px;outline:none;font-size:15px}
-.input-area input:focus{border-color:#22c55e}
-.input-area button{background:#22c55e;color:#000;border:none;padding:14px 22px;border-radius:25px;font-weight:700;cursor:pointer;transition:.2s}
-.input-area button:hover{background:#16a34a;transform:scale(1.05)}
-.welcome{text-align:center;margin:auto;color:#94a3b8;padding:40px 20px}
-.welcome h1{font-size:42px;color:#fff;margin-bottom:10px}
-.welcome h1 span{color:#22c55e}
-.welcome p{font-size:16px;margin:15px 0}
-.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
-.chip{background:#1e293b;border:1px solid #334155;padding:8px 14px;border-radius:20px;font-size:13px;cursor:pointer;transition:.2s}
-.chip:hover{background:#22c55e;color:#000;border-color:#22c55e}
-footer{text-align:center;font-size:11px;color:#475569;padding:8px}
+.ai b{color:#4ade80} .ai code{background:#0f172a;padding:2px 6px;border-radius:6px;color:#fbbf24}
+.welcome{text-align:center;margin:auto;color:#94a3b8;padding:30px 20px}
+.welcome h1{font-size:38px;color:#fff} .welcome h1 span{color:#22c55e}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:25px;text-align:left}
+.card{background:#1e293b;border:1px solid #334155;padding:14px;border-radius:12px}
+.card h3{font-size:14px;color:#fff;margin-bottom:6px} .card p{font-size:11px;color:#94a3b8;line-height:1.4}
+.card .free{color:#22c55e;font-size:10px;font-weight:700;margin-top:6px}
+.input-area{padding:12px;background:#0f172a;border-top:1px solid #1e293b;display:flex;gap:8px;max-width:900px;width:100%;margin:0 auto;align-items:center}
+.input-area input{flex:1;background:#1e293b;border:1px solid #334155;color:#fff;padding:13px 18px;border-radius:25px;outline:none;font-size:14px}
+.input-area button{background:#22c55e;color:#000;border:none;padding:13px 18px;border-radius:25px;font-weight:800;cursor:pointer}
+.settings-btn{background:#334155!important;color:#fff!important;padding:8px 12px!important;font-size:12px}
+#settings{background:#0f172a;border-bottom:1px solid #1e293b;padding:15px;display:none;max-width:900px;margin:0 auto;width:100%}
+#settings input{width:100%;background:#1e293b;border:1px solid #334155;color:#fff;padding:10px;border-radius:8px;margin:6px 0;font-size:12px}
+#settings label{font-size:11px;color:#94a3b8}
 </style>
 </head>
 <body>
 <header>
-<div class="logo">🌱 <span>SEED</span> AI</div>
-<div class="status">● Online - V1.0</div>
+<div class="logo">🌱 <span>SEED</span> AI V2</div>
+<div class="models">
+<button class="model-btn active" data-m="seed" onclick="setModel('seed')">🌱 SEED</button>
+<button class="model-btn" data-m="groq" onclick="setModel('groq')">⚡ GROQ</button>
+<button class="model-btn" data-m="gemini" onclick="setModel('gemini')">✨ GEMINI</button>
+<button class="model-btn" data-m="openai" onclick="setModel('openai')">🤖 GPT</button>
+<button class="model-btn" data-m="meta" onclick="setModel('meta')">🦙 META</button>
+<button class="model-btn" data-m="google" onclick="setModel('google')">🔍 GOOGLE 15</button>
+</div>
+<button class="model-btn settings-btn" onclick="toggleSet()">⚙️ API Keys</button>
 </header>
 
-<div class="chat-container" id="chat">
+<div id="settings">
+<h3 style="font-size:14px;margin-bottom:10px">🔑 FREE API Keys - Add Once, Use Lifetime (Saved in Browser)</h3>
+<label>GROQ (Free - Super Fast): https://console.groq.com/keys</label>
+<input id="groqKey" placeholder="gsk_...">
+<label>GEMINI (Free - 15 Models): https://aistudio.google.com/app/apikey</label>
+<input id="geminiKey" placeholder="AIza...">
+<label>OPENAI (Free $5): https://platform.openai.com/api-keys</label>
+<input id="openaiKey" placeholder="sk-...">
+<label>META LLAMA via Groq/OpenRouter (Free)</label>
+<input id="metaKey" placeholder="Use Groq key for Llama">
+<button onclick="saveKeys()" style="background:#22c55e;color:#000;border:none;padding:10px 18px;border-radius:8px;font-weight:700;margin-top:8px;cursor:pointer">Save Keys</button>
+<p style="font-size:10px;color:#64748b;margin-top:8px">Keys saved only in your browser - 100% safe - Never sent to server</p>
+</div>
+
+<div class="chat" id="chat">
 <div class="welcome" id="welcome">
-<h1>🌱 <span>SEED</span> AI</h1>
-<p>Your Personal Growth AI - Ask Anything!</p>
-<div class="chips">
-<div class="chip" onclick="askChip('What is SEED AI?')">🌱 What is SEED AI?</div>
-<div class="chip" onclick="askChip('Create a website for me')">💻 Create website</div>
-<div class="chip" onclick="askChip('Explain AI in simple words')">🤖 Explain AI</div>
-<div class="chip" onclick="askChip('Give me a business idea')">💡 Business Idea</div>
+<h1>🌱 <span>SEED</span> AI V2</h1>
+<p>All AI in One - 100% Free Forever!</p>
+<div class="grid">
+<div class="card"><h3>⚡ GROQ - Fastest AI</h3><p>How it works: LPU chips - 300 tokens/sec. No GPU wait. Best for coding, chat.</p><div class="free">✓ FREE - 14,400 requests/day</div></div>
+<div class="card"><h3>✨ GEMINI - Google 15 Free Models</h3><p>Models: 1.5 Flash, 1.5 Pro, 2.0 Flash, Gemma 2, etc. How: Google's own TPU.</p><div class="free">✓ FREE - 15 Models - 1M tokens</div></div>
+<div class="card"><h3>🤖 ChatGPT - OpenAI</h3><p>How: GPT-4o-mini trained on internet. Best for reasoning.</p><div class="free">✓ FREE - $5 credit</div></div>
+<div class="card"><h3>🦙 META - Llama 3.1 405B</h3><p>How: Open source, runs on Groq. Best for privacy, uncensored.</p><div class="free">✓ FREE via Groq</div></div>
+<div class="card"><h3>🔍 GOOGLE 15 Featured</h3><p>1.Gemini 2.0 Flash 2.Gemini 1.5 Pro 3.Gemma 2 9B 4.Gemma 2 27B 5.LearnLM etc all free via AI Studio</p><div class="free">✓ ALL FREE</div></div>
+<div class="card"><h3>🌱 SEED - Offline</h3><p>No key needed! My own brain. Works even without internet!</p><div class="free">✓ ALWAYS FREE</div></div>
 </div>
 </div>
 </div>
 
 <div class="input-area">
-<input type="text" id="input" placeholder="Ask SEED AI anything..." onkeypress="if(event.key==='Enter') sendMsg()">
-<button onclick="sendMsg()">🚀 Send</button>
+<input id="input" placeholder="Ask anything - SEED will auto-use best free AI..." onkeypress="if(event.key==='Enter') send()">
+<button onclick="send()">🚀</button>
 </div>
-<footer>SEED AI - Built for Future 🌱 | Ind4x Edition</footer>
 
 <script>
-const chat = document.getElementById('chat');
-const input = document.getElementById('input');
-const welcome = document.getElementById('welcome');
+let currentModel = 'seed';
+let keys = JSON.parse(localStorage.getItem('seedKeys')||'{}');
+document.getElementById('groqKey').value = keys.groq||'';
+document.getElementById('geminiKey').value = keys.gemini||'';
+document.getElementById('openaiKey').value = keys.openai||'';
+document.getElementById('metaKey').value = keys.meta||'';
 
-const responses = {
-  "hello": "Hey baby! 🌱 I'm SEED AI - Your smart assistant! How can I help you grow today?",
-  "hi": "Hi there! 🌱 SEED AI here! What you want to create today?",
-  "what is seed ai": "**🌱 SEED AI** is your personal AI assistant!\n\n• Super Fast ⚡\n• Smart Responses 🧠\n• 24/7 Online ✅\n• Built by YOU!\n\nAsk me anything baby!",
-  "who are you": "I'm **SEED AI** 🌱 - Created for Ind4x! I'm your AI that helps you build, learn and grow! Like a seed grows into a tree!",
-  "default": [
-    "That's a great idea 🌱! Let me help you with that. SEED AI thinks you should focus on growth and consistency!",
-    "Wow baby! 🔥 SEED AI got it! Here's my smart take: Always start small like a SEED, then grow big!",
-    "SEED AI is thinking... 🌱\n\nYour idea has huge potential! Want me to create a full plan for it?",
-    "I love your curiosity! 🚀 SEED AI says: Every big tree was once a small seed. Keep going!",
-    "Brilliant question! 🌱 SEED AI's answer: Break it into small steps, execute one by one. Want detailed steps?"
-  ]
-};
-
-function askChip(text) {
-  input.value = text;
-  sendMsg();
+function toggleSet(){ const s=document.getElementById('settings'); s.style.display=s.style.display==='block'?'none':'block'; }
+function saveKeys(){
+ keys={ groq:document.getElementById('groqKey').value, gemini:document.getElementById('geminiKey').value, openai:document.getElementById('openaiKey').value, meta:document.getElementById('metaKey').value };
+ localStorage.setItem('seedKeys', JSON.stringify(keys)); alert('Keys Saved 🌱! Now use any AI for FREE!');
+ toggleSet();
+}
+function setModel(m){
+ currentModel=m;
+ document.querySelectorAll('.model-btn').forEach(b=>b.classList.remove('active'));
+ document.querySelector(`[data-m="${m}"]`)?.classList.add('active');
+ document.getElementById('input').placeholder = `Ask with ${m.toUpperCase()}...`;
 }
 
-function sendMsg() {
-  const text = input.value.trim();
-  if (!text) return;
-  
-  if (welcome) welcome.style.display = 'none';
-  
-  addMsg(text, 'user');
-  input.value = '';
-  
-  const thinking = document.createElement('div');
-  thinking.className = 'msg ai thinking';
-  thinking.id = 'thinking';
-  thinking.innerText = '🌱 SEED AI is thinking...';
-  chat.appendChild(thinking);
-  chat.scrollTop = chat.scrollHeight;
-  
-  setTimeout(() => {
-    document.getElementById('thinking')?.remove();
-    const lower = text.toLowerCase();
-    let reply = '';
-    
-    if (responses[lower]) reply = responses[lower];
-    else if (lower.includes('seed')) reply = responses['what is seed ai'];
-    else if (lower.includes('website') || lower.includes('html')) reply = `I can create website for you! 🌱\n\n**SEED AI Website Plan:**\n\n1. HTML - Structure\n2. CSS - Beauty ✨\n3. JS - Brain 🧠\n\nTell me what kind of website you want, I will give you full code!`;
-    else if (lower.includes('business')) reply = `**💡 SEED AI Business Idea:**\n\n**SEED AI Agency** 🌱\n• Sell AI websites\n• Charge $100 per site\n• Use this SEED AI template\n• Grow like a seed to tree!\n\nWant full plan?`;
-    else {
-      const arr = responses['default'];
-      reply = arr[Math.floor(Math.random() * arr.length)];
-    }
-    
-    addMsg(reply, 'ai');
-  }, 800 + Math.random() * 700);
+const chatEl=document.getElementById('chat');
+const inputEl=document.getElementById('input');
+const welcomeEl=document.getElementById('welcome');
+
+function addMsg(t,type){
+ if(welcomeEl) welcomeEl.style.display='none';
+ const d=document.createElement('div'); d.className=`msg ${type}`;
+ d.innerHTML=t.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<b>$1</b>').replace(/`(.*?)`/g,'<code>$1</code>');
+ chatEl.appendChild(d); chatEl.scrollTop=chatEl.scrollHeight;
 }
 
-function addMsg(text, type) {
-  const div = document.createElement('div');
-  div.className = `msg ${type}`;
-  div.innerHTML = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
+async function send(){
+ const text=inputEl.value.trim(); if(!text) return;
+ addMsg(text,'user'); inputEl.value='';
+ const think=document.createElement('div'); think.className='msg ai'; think.innerText=`🌱 ${currentModel.toUpperCase()} thinking...`; think.id='think'; chatEl.appendChild(think); chatEl.scrollTop=chatEl.scrollHeight;
+
+ try{
+  let reply='';
+  if(currentModel==='seed' || (!keys.groq && !keys.gemini && !keys.openai)){
+   reply = await seedReply(text);
+  } else if(currentModel==='groq'){
+   reply = await callGroq(text);
+  } else if(currentModel==='gemini' || currentModel==='google'){
+   reply = await callGemini(text);
+  } else if(currentModel==='openai'){
+   reply = await callOpenAI(text);
+  } else if(currentModel==='meta'){
+   reply = await callGroq(text, 'llama-3.1-70b-versatile');
+  }
+  document.getElementById('think')?.remove();
+  addMsg(reply,'ai');
+ }catch(e){
+  document.getElementById('think')?.remove();
+  addMsg(`❌ Error: ${e.message}\n\n💡 Tip: Click ⚙️ API Keys and add free key. Or use SEED mode (no key needed).`,'ai');
+ }
+}
+
+async function seedReply(t){
+ const low=t.toLowerCase();
+ if(low.includes('groq')) return `**⚡ GROQ Explained:**\nGroq uses LPU not GPU! 300x faster than ChatGPT.\n\n**How it works:**\n1. LPU = Language Processing Unit\n2. No memory bottleneck\n3. Parallel processing\n\n**Free:** 14k req/day - Get key at console.groq.com`;
+ if(low.includes('gemini') || low.includes('google 15')) return `**✨ GOOGLE 15 FREE MODELS:**\n\n1. **gemini-2.0-flash-exp** - Latest, fastest\n2. **gemini-1.5-pro** - Best reasoning\n3. **gemini-1.5-flash** - Fast + cheap\n4. **gemma-2-27b** - Open source\n5. **gemma-2-9b** - Light\n6. **learnlm-1.5-pro** - For education\n7-15. Vision, embedding models etc\n\nAll FREE at aistudio.google.com - 1M tokens free!`;
+ if(low.includes('meta') || low.includes('llama')) return `**🦙 META LLaMA How it works:**\n\nOpen source model by Meta!\n• Trained on 15T tokens\n• Runs locally or via Groq\n• Uncensored, private\n\n**Free use:** Use Groq key with model 'llama-3.1-70b-versatile' - 100% free!`;
+ if(low.includes('chatgpt') || low.includes('gpt')) return `**🤖 ChatGPT How it works:**\n\n1. Transformer architecture\n2. RLHF training (Human feedback)\n3. 1.7T parameters\n\n**Free:** Use gpt-4o-mini via OpenAI - $5 free credit forever!`;
+ return `**🌱 SEED AI Reply:**\n\nYou asked: "${t}"\n\nMy smart answer: Every big AI started as a small SEED like me! \n\n**Want real AI answer?**\n→ Click ⚙️ add free GROQ/GEMINI key\n→ Then select model on top\n→ Ask again - You get real GPT-4 level answer for FREE!\n\nCurrently in **SEED offline mode** - No key needed!`;
+}
+
+async function callGroq(text, model='llama-3.3-70b-versatile'){
+ const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+  method:'POST',
+  headers:{'Content-Type':'application/json','Authorization':`Bearer ${keys.groq||keys.meta}`},
+  body:JSON.stringify({model, messages:[{role:'user',content:text}], temperature:0.7})
+ });
+ const data=await res.json();
+ if(data.error) throw new Error(data.error.message);
+ return data.choices[0].message.content;
+}
+async function callGemini(text){
+ const model='gemini-1.5-flash';
+ const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${keys.gemini}`,{
+  method:'POST', headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({contents:[{parts:[{text}]}]})
+ });
+ const data=await res.json();
+ if(data.error) throw new Error(data.error.message);
+ return data.candidates[0].content.parts[0].text;
+}
+async function callOpenAI(text){
+ const res=await fetch('https://api.openai.com/v1/chat/completions',{
+  method:'POST',
+  headers:{'Content-Type':'application/json','Authorization':`Bearer ${keys.openai}`},
+  body:JSON.stringify({model:'gpt-4o-mini', messages:[{role:'user',content:text}]})
+ });
+ const data=await res.json();
+ if(data.error) throw new Error(data.error.message);
+ return data.choices[0].message.content;
 }
 </script>
 </body>
